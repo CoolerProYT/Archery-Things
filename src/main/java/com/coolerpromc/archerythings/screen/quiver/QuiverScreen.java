@@ -9,7 +9,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -17,7 +17,7 @@ import net.minecraft.world.inventory.Slot;
 import java.util.Optional;
 
 public class QuiverScreen extends AbstractContainerScreen<QuiverMenu> {
-    public static final ResourceLocation TEXTURE = ArcheryThings.id("textures/gui/quiver.png");
+    public static final Identifier TEXTURE = ArcheryThings.id("textures/gui/quiver.png");
 
     public QuiverScreen(QuiverMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
