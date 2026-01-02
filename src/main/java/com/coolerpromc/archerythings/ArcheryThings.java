@@ -11,7 +11,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -134,7 +134,7 @@ public class ArcheryThings {
     }
 
 
-    public static Identifier id(String path){
-        return Identifier.fromNamespaceAndPath(MODID, path);
+    public static ResourceLocation id(String path){
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

@@ -9,15 +9,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -25,13 +25,13 @@ import org.joml.Quaternionf;
 
 public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<S>> extends RenderLayer<S, M> {
 
-    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(ArcheryThings.MODID, "textures/entity/quiver.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ArcheryThings.MODID, "textures/entity/quiver.png");
 
     private final QuiverModel model;
 
     public QuiverLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet) {
         super(renderer);
-        this.model = new QuiverModel(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderTypes::entityCutoutNoCull);
+        this.model = new QuiverModel(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderType::entityCutoutNoCull);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
 
             poseStack.pushPose();
             poseStack.translate(0.0F, -0.053125F, z);
-            nodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutoutNoCull(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            nodeCollector.submitModel(this.model, renderState, poseStack, RenderType.entityCutoutNoCull(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
             poseStack.popPose();
 
             poseStack.pushPose();
