@@ -4,8 +4,8 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Function;
 
@@ -13,7 +13,7 @@ public class QuiverModel extends Model {
     private final ModelPart root;
     private final ModelPart quiver;
 
-    public QuiverModel(ModelPart root, Function<Identifier, RenderType> func) {
+    public QuiverModel(ModelPart root, Function<ResourceLocation, RenderType> func) {
         super(root.getChild("quiver"), func);
         this.root = root;
         this.quiver = root.getChild("quiver");
