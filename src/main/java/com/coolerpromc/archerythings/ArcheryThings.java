@@ -47,6 +47,9 @@ public class ArcheryThings {
     public void onLivingGetProjectile(LivingGetProjectileEvent event) {
         if (event.getEntity() instanceof Player player){
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+            if(stack.isEmpty()){
+                stack = player.getItemBySlot(EquipmentSlot.LEGS);
+            }
             if (stack.has(ModDataComponents.STORED_QUIVER.get())){
                 stack = stack.get(ModDataComponents.STORED_QUIVER.get()).stack();
             }
@@ -87,6 +90,10 @@ public class ArcheryThings {
         Player player = event.getEntity();
         ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
 
+        if(stack.isEmpty()){
+            stack = player.getItemBySlot(EquipmentSlot.LEGS);
+        }
+
         if (stack.has(ModDataComponents.STORED_QUIVER.get())){
             stack = stack.get(ModDataComponents.STORED_QUIVER.get()).stack();
         }
@@ -124,7 +131,7 @@ public class ArcheryThings {
         ItemStack left = event.getLeft();
         ItemStack right = event.getRight();
 
-        if (left.get(DataComponents.EQUIPPABLE) != null && left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) && right.getItem() == ModItems.QUIVER.get() && !left.has(ModDataComponents.STORED_QUIVER.get())){
+        if (left.get(DataComponents.EQUIPPABLE) != null && (left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS)) && right.getItem() == ModItems.QUIVER.get() && !left.has(ModDataComponents.STORED_QUIVER.get())){
             ItemStack output = event.getLeft().copy();
             output.set(ModDataComponents.STORED_QUIVER.get(), new StoredQuiver(right));
             event.setOutput(output);
