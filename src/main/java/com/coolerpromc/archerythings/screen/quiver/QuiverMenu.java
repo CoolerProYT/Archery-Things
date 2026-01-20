@@ -34,6 +34,9 @@ public class QuiverMenu extends AbstractContainerMenu {
         else if(player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get())){
             quiver = player.getItemBySlot(EquipmentSlot.CHEST).get(ModDataComponents.STORED_QUIVER.get()).stack();
         }
+        else if(player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get())){
+            quiver = player.getItemBySlot(EquipmentSlot.LEGS).get(ModDataComponents.STORED_QUIVER.get()).stack();
+        }
         else {
             quiver = ItemStack.EMPTY;
         }
@@ -95,7 +98,7 @@ public class QuiverMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get());
+        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

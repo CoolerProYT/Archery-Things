@@ -4,6 +4,7 @@ import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.item.custom.ModQuiverItem;
 import com.coolerpromc.archerythings.model.ModModelLayers;
 import com.coolerpromc.archerythings.model.quiver.QuiverLayer;
+import com.coolerpromc.archerythings.model.quiver.QuiverLegModel;
 import com.coolerpromc.archerythings.model.quiver.QuiverModel;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import com.coolerpromc.archerythings.screen.quiver.QuiverScreen;
@@ -59,6 +60,7 @@ public class ArcheryThingsClient {
     @SubscribeEvent
     public static void onEntityRenderersRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.QUIVER, QuiverModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.QUIVER_LEG, QuiverLegModel::createLegLayer);
     }
 
     @SubscribeEvent
@@ -84,7 +86,7 @@ public class ArcheryThingsClient {
         };
 
         BuiltInRegistries.ITEM.stream().forEach(item -> {
-            if (!(item instanceof ModQuiverItem) && item.components().has(DataComponents.EQUIPPABLE) && item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST)){
+            if (!(item instanceof ModQuiverItem) && item.components().has(DataComponents.EQUIPPABLE) && (item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS))){
                 event.register(item, decorator);
             }
         });
