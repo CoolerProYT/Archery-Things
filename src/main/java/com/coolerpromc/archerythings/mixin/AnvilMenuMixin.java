@@ -45,7 +45,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
     @Unique
     public void onAnvilUpdate(ItemStack left, ItemStack right, Container resultSlot, @Nullable String name, Player player) {
         if (!left.isEmpty()) {
-            if (left.get(DataComponents.EQUIPPABLE) != null && left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) && right.getItem() == ModItems.QUIVER && !left.has(ModDataComponents.STORED_QUIVER)){
+            if (left.get(DataComponents.EQUIPPABLE) != null && (left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS)) && right.getItem() == ModItems.QUIVER && !left.has(ModDataComponents.STORED_QUIVER)){
                 ItemStack output = left.copy();
                 output.set(ModDataComponents.STORED_QUIVER, new StoredQuiver(right));
                 resultSlot.setItem(0, output);

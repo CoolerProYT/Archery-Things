@@ -51,6 +51,9 @@ public class ArcheryThings implements ModInitializer {
 
     public static void onArrowLoose(Player player, ItemStack bow, Level level, boolean hasAmmo) {
         ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+        if(stack.isEmpty()){
+            stack = player.getItemBySlot(EquipmentSlot.LEGS);
+        }
 
         if (stack.has(ModDataComponents.STORED_QUIVER)){
             stack = stack.get(ModDataComponents.STORED_QUIVER).stack();

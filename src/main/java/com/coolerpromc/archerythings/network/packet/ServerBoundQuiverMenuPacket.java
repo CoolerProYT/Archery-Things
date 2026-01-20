@@ -28,7 +28,7 @@ public record ServerBoundQuiverMenuPacket() implements CustomPacketPayload {
     public static void handle(ServerBoundQuiverMenuPacket packet, ServerPlayNetworking.Context context){
         context.server().execute(() -> {
             if (context.player() instanceof ServerPlayer player){
-                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER)){
+                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER)){
                     player.openMenu(new ExtendedScreenHandlerFactory<Optional<InteractionHand>>() {
                         @Override
                         public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {

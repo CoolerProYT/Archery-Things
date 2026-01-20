@@ -71,6 +71,9 @@ public abstract class PlayerMixin extends Avatar {
     public ItemStack getProjectileFromQuiver(LivingEntity livingEntity, ItemStack projectileWeaponItemStack, ItemStack ammo) {
         if (livingEntity instanceof Player player){
             ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+            if(stack.isEmpty()){
+                stack = player.getItemBySlot(EquipmentSlot.LEGS);
+            }
             if (stack.has(ModDataComponents.STORED_QUIVER)){
                 stack = stack.get(ModDataComponents.STORED_QUIVER).stack();
             }

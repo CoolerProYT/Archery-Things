@@ -50,6 +50,9 @@ public record ServerBoundSelectQuiverSlotPacket(int slot, Optional<InteractionHa
                 else if(player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER)){
                     quiver = player.getItemBySlot(EquipmentSlot.CHEST).get(ModDataComponents.STORED_QUIVER).stack();
                 }
+                else if(player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER)){
+                    quiver = player.getItemBySlot(EquipmentSlot.LEGS).get(ModDataComponents.STORED_QUIVER).stack();
+                }
 
                 quiver.set(ModDataComponents.SELECTED, packet.slot);
             }
