@@ -2,19 +2,16 @@ package com.coolerpromc.archerythings;
 
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.component.data.QuiverData;
-import com.coolerpromc.archerythings.component.data.StoredQuiver;
 import com.coolerpromc.archerythings.item.ModCreativeTabs;
 import com.coolerpromc.archerythings.item.ModItems;
 import com.coolerpromc.archerythings.item.custom.ModQuiverItem;
 import com.coolerpromc.archerythings.network.NetworkRegistries;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -54,6 +51,9 @@ public class ArcheryThings implements ModInitializer {
 
     public static void onArrowLoose(Player player, ItemStack bow, Level level, boolean hasAmmo) {
         ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+        if(stack.isEmpty()){
+            stack = player.getItemBySlot(EquipmentSlot.LEGS);
+        }
 
         if (stack.has(ModDataComponents.STORED_QUIVER)){
             stack = stack.get(ModDataComponents.STORED_QUIVER).stack();

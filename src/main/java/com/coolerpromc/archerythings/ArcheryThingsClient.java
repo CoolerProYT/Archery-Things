@@ -5,6 +5,7 @@ import com.coolerpromc.archerythings.item.custom.ModQuiverItem;
 import com.coolerpromc.archerythings.key.ModKeyMappings;
 import com.coolerpromc.archerythings.model.ModModelLayers;
 import com.coolerpromc.archerythings.model.quiver.QuiverLayer;
+import com.coolerpromc.archerythings.model.quiver.QuiverLegModel;
 import com.coolerpromc.archerythings.model.quiver.QuiverModel;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import com.coolerpromc.archerythings.screen.quiver.QuiverScreen;
@@ -45,6 +46,7 @@ public class ArcheryThingsClient implements ClientModInitializer {
         MenuScreens.register(ModMenuTypes.QUIVER_MENU, QuiverScreen::new);
 
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.QUIVER, QuiverModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.QUIVER_LEG, QuiverLegModel::createLegLayer);
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof AvatarRenderer<?> renderer){
@@ -52,12 +54,14 @@ public class ArcheryThingsClient implements ClientModInitializer {
             }
         });
 
-        DrawItemStackOverlayCallback.EVENT.register((guiGraphics, textRenderer, stack, x, y) -> {
-            if (!(stack.getItem() instanceof ModQuiverItem) && stack.has(DataComponents.EQUIPPABLE) && stack.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) && stack.has(ModDataComponents.STORED_QUIVER)){
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().scale(0.5f);
-                guiGraphics.renderFakeItem(stack.get(ModDataComponents.STORED_QUIVER).stack(), x * 2, y * 2);
-                guiGraphics.pose().popMatrix();
+        DrawItemStackOverlayCallback.EVENT.register((guiGraphics, textRenderer, item, x, y) -> {
+            if (!(item.getItem() instanceof ModQuiverItem) && item.has(DataComponents.EQUIPPABLE) && (item.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || item.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS))){
+                if(item.has(ModDataComponents.STORED_QUIVER)){
+                    guiGraphics.pose().pushMatrix();
+                    guiGraphics.pose().scale(0.5f);
+                    guiGraphics.renderFakeItem(item.get(ModDataComponents.STORED_QUIVER).stack(), x * 2, y * 2);
+                    guiGraphics.pose().popMatrix();
+                }
             }
         });
 
