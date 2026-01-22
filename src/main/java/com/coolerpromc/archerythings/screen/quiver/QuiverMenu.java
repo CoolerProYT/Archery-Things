@@ -25,11 +25,11 @@ public class QuiverMenu extends AbstractContainerMenu {
         if (hand != null && player.getItemInHand(hand).is(ModItems.QUIVER)){
             quiver = player.getItemInHand(hand);
         }
-        else if(player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER)){
-            quiver = player.getItemBySlot(EquipmentSlot.CHEST);
-        }
         else if (hand != null && player.getItemInHand(hand).has(ModDataComponents.STORED_QUIVER)){
             quiver = player.getItemInHand(hand).get(ModDataComponents.STORED_QUIVER).stack();
+        }
+        else if(player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER)){
+            quiver = player.getItemBySlot(EquipmentSlot.CHEST);
         }
         else if(player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER)){
             quiver = player.getItemBySlot(EquipmentSlot.CHEST).get(ModDataComponents.STORED_QUIVER).stack();

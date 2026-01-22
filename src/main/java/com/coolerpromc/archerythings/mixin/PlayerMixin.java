@@ -25,6 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Predicate;
 
+import static com.coolerpromc.archerythings.ArcheryThings.hasArrow;
+
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Avatar {
     @Shadow
@@ -70,16 +72,23 @@ public abstract class PlayerMixin extends Avatar {
     @Unique
     public ItemStack getProjectileFromQuiver(LivingEntity livingEntity, ItemStack projectileWeaponItemStack, ItemStack ammo) {
         if (livingEntity instanceof Player player){
-            ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
-            if(stack.isEmpty()){
-                stack = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack chestEquipment = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack quiverLike = ItemStack.EMPTY;
+
+            if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
+                quiverLike = chestEquipment;
             }
-            if (stack.has(ModDataComponents.STORED_QUIVER)){
-                stack = stack.get(ModDataComponents.STORED_QUIVER).stack();
+            else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
+                quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
             }
-            if (!stack.isEmpty() && (stack.getItem() == ModItems.QUIVER || stack.has(ModDataComponents.STORED_QUIVER))){
-                QuiverData contents = stack.getOrDefault(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY);
-                int selected = stack.getOrDefault(ModDataComponents.SELECTED, 0);
+            else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+                quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+            }
+
+            if (!quiverLike.isEmpty() && (quiverLike.getItem() == ModItems.QUIVER || quiverLike.has(ModDataComponents.STORED_QUIVER))){
+                QuiverData contents = quiverLike.getOrDefault(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY);
+                int selected = quiverLike.getOrDefault(ModDataComponents.SELECTED, 0);
 
                 if (selected < contents.getSlots()){
                     ItemStack selectedStack = contents.getStackInSlot(selected);
