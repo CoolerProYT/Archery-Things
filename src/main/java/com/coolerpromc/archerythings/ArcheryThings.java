@@ -46,16 +46,23 @@ public class ArcheryThings {
     @SubscribeEvent
     public void onLivingGetProjectile(LivingGetProjectileEvent event) {
         if (event.getEntity() instanceof Player player){
-            ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
-            if(stack.isEmpty()){
-                stack = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack chestEquipment = player.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
+            ItemStack quiverLike = ItemStack.EMPTY;
+
+            if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
+                quiverLike = chestEquipment;
             }
-            if (stack.has(ModDataComponents.STORED_QUIVER.get())){
-                stack = stack.get(ModDataComponents.STORED_QUIVER.get()).stack();
+            else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
+                quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
             }
-            if (!stack.isEmpty() && (stack.getItem() == ModItems.QUIVER.get() || stack.has(ModDataComponents.STORED_QUIVER.get()))){
-                QuiverData contents = stack.getOrDefault(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY);
-                int selected = stack.getOrDefault(ModDataComponents.SELECTED.get(), 0);
+            else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+                quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+            }
+
+            if (!quiverLike.isEmpty() && (quiverLike.getItem() == ModItems.QUIVER.get() || quiverLike.has(ModDataComponents.STORED_QUIVER.get()))){
+                QuiverData contents = quiverLike.getOrDefault(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY);
+                int selected = quiverLike.getOrDefault(ModDataComponents.SELECTED.get(), 0);
 
                 if (selected < contents.getSlots()){
                     ItemStack selectedStack = contents.getStackInSlot(selected);
@@ -88,20 +95,25 @@ public class ArcheryThings {
     @SubscribeEvent
     public void onArrowLoose(ArrowLooseEvent event) {
         Player player = event.getEntity();
-        ItemStack stack = player.getItemBySlot(EquipmentSlot.CHEST);
+        ItemStack chestEquipment = player.getItemBySlot(EquipmentSlot.CHEST);
+        ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
+        ItemStack quiverLike = ItemStack.EMPTY;
 
-        if(stack.isEmpty()){
-            stack = player.getItemBySlot(EquipmentSlot.LEGS);
+
+        if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
+            quiverLike = chestEquipment;
+        }
+        else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
+            quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+        }
+        else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+            quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
         }
 
-        if (stack.has(ModDataComponents.STORED_QUIVER.get())){
-            stack = stack.get(ModDataComponents.STORED_QUIVER.get()).stack();
-        }
-
-        if (!stack.isEmpty()) {
-            QuiverData contents = stack.get(ModDataComponents.QUIVER_DATA.get());;
+        if (!quiverLike.isEmpty()) {
+            QuiverData contents = quiverLike.get(ModDataComponents.QUIVER_DATA.get());;
             if (contents != null && contents != QuiverData.EMPTY) {
-                int selected = stack.getOrDefault(ModDataComponents.SELECTED.get(), 0);
+                int selected = quiverLike.getOrDefault(ModDataComponents.SELECTED.get(), 0);
 
                 if (selected >= 0 && selected < contents.getSlots()) {
                     ItemStack checkArrow = contents.getStackInSlot(selected);
@@ -119,7 +131,7 @@ public class ArcheryThings {
                             updatedItems.set(selected, ItemStack.EMPTY);
                         }
 
-                        stack.set(ModDataComponents.QUIVER_DATA.get(), QuiverData.fromItems(updatedItems));
+                        quiverLike.set(ModDataComponents.QUIVER_DATA.get(), QuiverData.fromItems(updatedItems));
                     }
                 }
             }
@@ -138,6 +150,19 @@ public class ArcheryThings {
             event.setMaterialCost(1);
             event.setXpCost(1);
         }
+    }
+
+    public static boolean hasArrow(ItemStack quiverLike){
+        if (!quiverLike.isEmpty() && (quiverLike.getItem() == ModItems.QUIVER.get() || quiverLike.has(ModDataComponents.STORED_QUIVER))){
+            QuiverData contents = quiverLike.getOrDefault(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY);
+            int selected = quiverLike.getOrDefault(ModDataComponents.SELECTED, 0);
+
+            if (selected < contents.getSlots()){
+                ItemStack selectedStack = contents.getStackInSlot(selected);
+                return !selectedStack.isEmpty();
+            }
+        }
+        return false;
     }
 
     public static ResourceLocation id(String path){
