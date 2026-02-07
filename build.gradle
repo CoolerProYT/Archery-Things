@@ -14,7 +14,19 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-
+    maven { url 'https://maven.wispforest.io/releases' }
+    maven { url 'https://maven.su5ed.dev/releases' }
+    maven { url 'https://maven.fabricmc.net' }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 base {
@@ -73,7 +85,8 @@ configurations {
 }
 
 dependencies {
-
+    compileOnly "curse.maven:owo-lib-532610:7104510"
+    compileOnly "io.wispforest:accessories-neoforge:${project.accessories_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -140,11 +153,13 @@ publishMods {
         projectId = "1418219"
         accessToken = findProperty("CF_TOKEN")
         minecraftVersions.add(minecraft_version)
+        optional("accessories")
     }
 
     modrinth {
         projectId = 'wlp7ua5G'
         accessToken = findProperty("MODRINTH_TOKEN")
         minecraftVersions.add(minecraft_version)
+        optional("accessories")
     }
 }

@@ -14,7 +14,7 @@ import java.util.function.Function;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ArcheryThings.MODID);
 
-    public static final DeferredItem<ModQuiverItem> QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.component(ModDataComponents.QUIVER_DATA.get(), QuiverData.EMPTY).component(ModDataComponents.SELECTED.get(), 0)));
+    public static final DeferredItem<ModQuiverItem> QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.component(ModDataComponents.QUIVER_DATA.get(), QuiverData.EMPTY).stacksTo(1).component(ModDataComponents.SELECTED.get(), 0)));
 
     private static <T extends Item> DeferredItem<T> registerItem(String name, Function<Item.Properties, ? extends T> item){
         return ITEMS.registerItem(name, item);

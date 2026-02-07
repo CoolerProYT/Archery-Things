@@ -1,5 +1,6 @@
 package com.coolerpromc.archerythings;
 
+import com.coolerpromc.archerythings.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.component.data.QuiverData;
 import com.coolerpromc.archerythings.component.data.StoredQuiver;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
@@ -49,15 +51,23 @@ public class ArcheryThings {
             ItemStack chestEquipment = player.getItemBySlot(EquipmentSlot.CHEST);
             ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
             ItemStack quiverLike = ItemStack.EMPTY;
+            boolean chestHasArrow = false;
+            boolean legHasArrow = false;
 
             if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
                 quiverLike = chestEquipment;
+                chestHasArrow = true;
             }
             else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
                 quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+                chestHasArrow = true;
             }
-            else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+            else if (legEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(legEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
                 quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+                legHasArrow = true;
+            }
+            else if (isQuiverEquipped(player)){
+                quiverLike = AccessoriesHelper.getQuiver(player);
             }
 
             if (!quiverLike.isEmpty() && (quiverLike.getItem() == ModItems.QUIVER.get() || quiverLike.has(ModDataComponents.STORED_QUIVER.get()))){
@@ -76,6 +86,9 @@ public class ArcheryThings {
                 else{
                     player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
                 }
+            }
+            else if (!chestHasArrow && !legHasArrow){
+                player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
             }
         }
     }
@@ -99,15 +112,17 @@ public class ArcheryThings {
         ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack quiverLike = ItemStack.EMPTY;
 
-
         if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
             quiverLike = chestEquipment;
         }
         else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
             quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
         }
-        else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+        else if (legEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(legEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
             quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+        }
+        else if (isQuiverEquipped(player)){
+            quiverLike = AccessoriesHelper.getQuiver(player);
         }
 
         if (!quiverLike.isEmpty()) {
@@ -163,6 +178,10 @@ public class ArcheryThings {
             }
         }
         return false;
+    }
+
+    public static boolean isQuiverEquipped(Player player){
+        return ModList.get().isLoaded("accessories") && AccessoriesHelper.isQuiverEquipped(player);
     }
 
     public static ResourceLocation id(String path){

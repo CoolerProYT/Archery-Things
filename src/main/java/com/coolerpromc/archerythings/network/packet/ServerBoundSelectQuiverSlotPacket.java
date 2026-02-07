@@ -1,6 +1,7 @@
 package com.coolerpromc.archerythings.network.packet;
 
 import com.coolerpromc.archerythings.ArcheryThings;
+import com.coolerpromc.archerythings.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.item.ModItems;
 import com.coolerpromc.archerythings.screen.quiver.QuiverMenu;
@@ -53,7 +54,9 @@ public record ServerBoundSelectQuiverSlotPacket(int slot, Optional<InteractionHa
                 else if(player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get())){
                     quiver = player.getItemBySlot(EquipmentSlot.LEGS).get(ModDataComponents.STORED_QUIVER.get()).stack();
                 }
-
+                else if (ArcheryThings.isQuiverEquipped(player)){
+                    quiver = AccessoriesHelper.getQuiver(player);
+                }
 
                 quiver.set(ModDataComponents.SELECTED.get(), packet.slot);
             }

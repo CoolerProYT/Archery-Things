@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "order": 80,
+  "slots": [
+    "quiver"
+  ],
+  "icon": "accessories:container/slot/group/chest"
+}

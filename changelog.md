@@ -1,1 +1,2 @@
-- Arrow in Leggings Quiver can be selected now even player equipped empty Chestplate Quiver
+- Quiver is no longer stackable
+- Added compatibility to `Accessories`, a new slot `Quiver` has been added
