@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import java.util.function.Function;
 
 public class ModItems {
-    public static final ModQuiverItem QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.component(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY).component(ModDataComponents.SELECTED, 0)));
+    public static final ModQuiverItem QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.component(ModDataComponents.QUIVER_DATA, QuiverData.EMPTY).stacksTo(1).component(ModDataComponents.SELECTED, 0)));
 
     private static <T extends Item> T registerItem(String name, Function<Item.Properties, ? extends T> item){
         return Registry.register(BuiltInRegistries.ITEM, ArcheryThings.id(name), item.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ArcheryThings.id(name)))));

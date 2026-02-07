@@ -1,5 +1,6 @@
 package com.coolerpromc.archerythings.mixin;
 
+import com.coolerpromc.archerythings.compat.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.component.data.QuiverData;
 import com.coolerpromc.archerythings.item.ModItems;
@@ -26,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.function.Predicate;
 
 import static com.coolerpromc.archerythings.ArcheryThings.hasArrow;
+import static com.coolerpromc.archerythings.ArcheryThings.isQuiverEquipped;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Avatar {
@@ -75,15 +77,23 @@ public abstract class PlayerMixin extends Avatar {
             ItemStack chestEquipment = player.getItemBySlot(EquipmentSlot.CHEST);
             ItemStack legEquipment = player.getItemBySlot(EquipmentSlot.LEGS);
             ItemStack quiverLike = ItemStack.EMPTY;
+            boolean chestHasArrow = false;
+            boolean legHasArrow = false;
 
             if (chestEquipment.is(ModItems.QUIVER) && hasArrow(chestEquipment)){
                 quiverLike = chestEquipment;
+                chestHasArrow = true;
             }
             else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
                 quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+                chestHasArrow = true;
             }
-            else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+            else if (legEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(legEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
                 quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+                legHasArrow = true;
+            }
+            else if (isQuiverEquipped(player)){
+                quiverLike = AccessoriesHelper.getQuiver(player);
             }
 
             if (!quiverLike.isEmpty() && (quiverLike.getItem() == ModItems.QUIVER || quiverLike.has(ModDataComponents.STORED_QUIVER))){
@@ -102,6 +112,9 @@ public abstract class PlayerMixin extends Avatar {
                 else{
                     player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
                 }
+            }
+            else if (!chestHasArrow && !legHasArrow){
+                player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
             }
         }
         return ammo;

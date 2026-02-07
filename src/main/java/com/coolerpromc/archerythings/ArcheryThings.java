@@ -1,5 +1,6 @@
 package com.coolerpromc.archerythings;
 
+import com.coolerpromc.archerythings.compat.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.component.data.QuiverData;
 import com.coolerpromc.archerythings.item.ModCreativeTabs;
@@ -9,6 +10,7 @@ import com.coolerpromc.archerythings.network.NetworkRegistries;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -60,8 +62,11 @@ public class ArcheryThings implements ModInitializer {
         else if (chestEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(chestEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
             quiverLike = chestEquipment.get(ModDataComponents.STORED_QUIVER).stack();
         }
-        else if (legEquipment.has(ModDataComponents.STORED_QUIVER)){
+        else if (legEquipment.has(ModDataComponents.STORED_QUIVER) && hasArrow(legEquipment.get(ModDataComponents.STORED_QUIVER).stack())){
             quiverLike = legEquipment.get(ModDataComponents.STORED_QUIVER).stack();
+        }
+        else if (isQuiverEquipped(player)){
+            quiverLike = AccessoriesHelper.getQuiver(player);
         }
 
         if (!quiverLike.isEmpty()) {
@@ -103,6 +108,10 @@ public class ArcheryThings implements ModInitializer {
             }
         }
         return false;
+    }
+
+    public static boolean isQuiverEquipped(Player player){
+        return FabricLoader.getInstance().isModLoaded("accessories") && AccessoriesHelper.isQuiverEquipped(player);
     }
 
     public static ResourceLocation id(String path){

@@ -1,5 +1,7 @@
 package com.coolerpromc.archerythings.screen.quiver;
 
+import com.coolerpromc.archerythings.ArcheryThings;
+import com.coolerpromc.archerythings.compat.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.item.ModItems;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
@@ -36,6 +38,9 @@ public class QuiverMenu extends AbstractContainerMenu {
         }
         else if(player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER)){
             quiver = player.getItemBySlot(EquipmentSlot.LEGS).get(ModDataComponents.STORED_QUIVER).stack();
+        }
+        else if (ArcheryThings.isQuiverEquipped(player)){
+            quiver = AccessoriesHelper.getQuiver(player);
         }
         else {
             quiver = ItemStack.EMPTY;
@@ -98,7 +103,7 @@ public class QuiverMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER);
+        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER) || ArcheryThings.isQuiverEquipped(player);
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
