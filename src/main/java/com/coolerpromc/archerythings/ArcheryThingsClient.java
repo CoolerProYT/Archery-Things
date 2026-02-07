@@ -1,5 +1,6 @@
 package com.coolerpromc.archerythings;
 
+import com.coolerpromc.archerythings.compat.AccessoriesHelper;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.item.custom.ModQuiverItem;
 import com.coolerpromc.archerythings.model.ModModelLayers;
@@ -8,10 +9,21 @@ import com.coolerpromc.archerythings.model.quiver.QuiverLegModel;
 import com.coolerpromc.archerythings.model.quiver.QuiverModel;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import com.coolerpromc.archerythings.screen.quiver.QuiverScreen;
+import com.google.common.reflect.TypeToken;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -24,6 +36,7 @@ import net.neoforged.neoforge.client.IItemDecorator;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.LinkedList;
@@ -88,6 +101,20 @@ public class ArcheryThingsClient {
         BuiltInRegistries.ITEM.stream().forEach(item -> {
             if (!(item instanceof ModQuiverItem) && item.components().has(DataComponents.EQUIPPABLE) && (item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS))){
                 event.register(item, decorator);
+            }
+        });
+    }
+
+    public static final ContextKey<ItemStack> QUIVER_STACK = new ContextKey<>(ArcheryThings.id("quiver_stack"));
+
+    @SubscribeEvent
+    public static void onRegisterRenderStateModifiers(RegisterRenderStateModifiersEvent event) {
+        event.registerEntityModifier(new TypeToken<LivingEntityRenderer<LivingEntity, LivingEntityRenderState, ?>>(){}, (entity, state) -> {
+            if (entity instanceof Player player && ArcheryThings.isQuiverEquipped(player)){
+                state.setRenderData(QUIVER_STACK, AccessoriesHelper.getQuiver(player));
+            }
+            else{
+                state.setRenderData(QUIVER_STACK, null);
             }
         });
     }
