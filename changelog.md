@@ -1,2 +1,2 @@
-- Quiver is no longer stackable
-- Added compatibility to `Accessories`, a new slot `Quiver` has been added
+- Added player renderer for accessories quiver slot
+- Fixed arrow in quiver rendered in wrong z axis for quiver without chestplate
