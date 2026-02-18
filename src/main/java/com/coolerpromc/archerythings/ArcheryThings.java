@@ -70,11 +70,11 @@ public class ArcheryThings {
                         event.setProjectileItemStack(selectedStack);
                     }
                     else{
-                        player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
+                        player.sendSystemMessage(Component.translatable("message.archerythings.no_quiver_slot"));
                     }
                 }
                 else{
-                    player.displayClientMessage(Component.translatable("message.archerythings.no_quiver_slot"), true);
+                    player.sendSystemMessage(Component.translatable("message.archerythings.no_quiver_slot"));
                 }
             }
         }

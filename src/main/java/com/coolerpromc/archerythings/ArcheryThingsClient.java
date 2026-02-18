@@ -76,19 +76,17 @@ public class ArcheryThingsClient {
     @SubscribeEvent
     public static void onRegisterItemDecorations(RegisterItemDecorationsEvent event) {
         IItemDecorator decorator = (guiGraphics, font, itemStack, i, i1) -> {
-            if (itemStack.has(ModDataComponents.STORED_QUIVER.get())){
-                guiGraphics.pose().pushMatrix();
-                guiGraphics.pose().scale(0.5f);
-                guiGraphics.renderFakeItem(itemStack.get(ModDataComponents.STORED_QUIVER.get()).stack(), i * 2, i1 * 2);
-                guiGraphics.pose().popMatrix();
+            if (!(itemStack.getItem() instanceof ModQuiverItem) && itemStack.has(DataComponents.EQUIPPABLE) && (itemStack.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || itemStack.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS))) {
+                if (itemStack.has(ModDataComponents.STORED_QUIVER.get())) {
+                    guiGraphics.pose().pushMatrix();
+                    guiGraphics.pose().scale(0.5f);
+                    guiGraphics.renderFakeItem(itemStack.get(ModDataComponents.STORED_QUIVER.get()).stack(), i * 2, i1 * 2);
+                    guiGraphics.pose().popMatrix();
+                }
             }
             return true;
         };
 
-        BuiltInRegistries.ITEM.stream().forEach(item -> {
-            if (!(item instanceof ModQuiverItem) && item.components().has(DataComponents.EQUIPPABLE) && (item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || item.components().get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS))){
-                event.register(item, decorator);
-            }
-        });
+        BuiltInRegistries.ITEM.stream().forEach(item -> event.register(item, decorator));
     }
 }

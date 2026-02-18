@@ -20,8 +20,7 @@ public class QuiverScreen extends AbstractContainerScreen<QuiverMenu> {
     public static final Identifier TEXTURE = ArcheryThings.id("textures/gui/quiver.png");
 
     public QuiverScreen(QuiverMenu menu, Inventory playerInventory, Component title) {
-        super(menu, playerInventory, title);
-        this.imageHeight = 133;
+        super(menu, playerInventory, title, 176, 133);
         this.inventoryLabelY = this.imageHeight - 94;
     }
 

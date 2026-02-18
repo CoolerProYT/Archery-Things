@@ -1,1 +1,1 @@
-- Arrow in Leggings Quiver can be selected now even player equipped empty Chestplate Quiver
+- Port to 26.1-snapshot-7

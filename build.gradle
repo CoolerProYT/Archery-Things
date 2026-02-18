@@ -21,15 +21,10 @@ base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     version = project.neo_version
-
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
 
     runs {
         client {
@@ -108,13 +103,6 @@ publishing {
     }
     repositories {
         mavenLocal()
-        maven {
-            url = findProperty("repsy_url")
-            credentials {
-                username = findProperty("repsy_username")
-                password = findProperty("repsy_password")
-            }
-        }
     }
 }
 
@@ -131,7 +119,7 @@ idea {
 
 publishMods {
     file.set(jar.archiveFile)
-    type = STABLE
+    type = BETA
     modLoaders.add("neoforge")
     changelog = file("changelog.md").text
     displayName = mod_id + "-" + mod_version
@@ -139,7 +127,7 @@ publishMods {
     curseforge {
         projectId = "1418219"
         accessToken = findProperty("CF_TOKEN")
-        minecraftVersions.add(minecraft_version)
+        minecraftVersions.add("26.1-snapshot")
     }
 
     modrinth {

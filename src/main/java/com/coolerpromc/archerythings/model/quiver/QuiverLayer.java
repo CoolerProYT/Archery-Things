@@ -34,8 +34,8 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
 
     public QuiverLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet) {
         super(renderer);
-        this.model = new QuiverModel(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderTypes::entityCutoutNoCull);
-        this.legModel = new QuiverLegModel(modelSet.bakeLayer(ModModelLayers.QUIVER_LEG), RenderTypes::entityCutoutNoCull);
+        this.model = new QuiverModel(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderTypes::entityCutout);
+        this.legModel = new QuiverLegModel(modelSet.bakeLayer(ModModelLayers.QUIVER_LEG), RenderTypes::entityCutout);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
             else{
                 poseStack.translate(0.0F, -0.053125F, z);
             }
-            nodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutoutNoCull(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            nodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutout(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
             poseStack.popPose();
 
             poseStack.pushPose();
@@ -115,7 +115,7 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
             else{
                 poseStack.translate(0.0F, -0.053125F, z);
             }
-            nodeCollector.submitModel(this.legModel, renderState, poseStack, RenderTypes.entityCutoutNoCull(LEG_TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            nodeCollector.submitModel(this.legModel, renderState, poseStack, RenderTypes.entityCutout(LEG_TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
             poseStack.popPose();
 
             poseStack.pushPose();
