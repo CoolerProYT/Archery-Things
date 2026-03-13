@@ -80,7 +80,7 @@ public class ArcheryThingsClient {
                 if (itemStack.has(ModDataComponents.STORED_QUIVER.get())) {
                     guiGraphics.pose().pushMatrix();
                     guiGraphics.pose().scale(0.5f);
-                    guiGraphics.renderFakeItem(itemStack.get(ModDataComponents.STORED_QUIVER.get()).stack(), i * 2, i1 * 2);
+                    guiGraphics.fakeItem(itemStack.get(ModDataComponents.STORED_QUIVER.get()).stack(), i * 2, i1 * 2);
                     guiGraphics.pose().popMatrix();
                 }
             }

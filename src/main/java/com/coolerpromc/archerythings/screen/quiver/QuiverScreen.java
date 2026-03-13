@@ -3,7 +3,7 @@ package com.coolerpromc.archerythings.screen.quiver;
 import com.coolerpromc.archerythings.ArcheryThings;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.network.packet.ServerBoundSelectQuiverSlotPacket;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -25,12 +25,13 @@ public class QuiverScreen extends AbstractContainerScreen<QuiverMenu> {
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+        super.extractBackground(graphics, mouseX, mouseY, a);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Slot slot = this.menu.slots.get(36 + this.menu.selected());
         int x = this.leftPos + slot.x - 1;
         int y = this.topPos + slot.y - 1;
@@ -39,8 +40,7 @@ public class QuiverScreen extends AbstractContainerScreen<QuiverMenu> {
         guiGraphics.fill(x, y, x + 1, y + 18, ARGB.color(0xFF, 16755200));
         guiGraphics.fill(x + 17, y, x + 18, y + 18, ARGB.color(0xFF, 16755200));
 
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        renderTooltip(guiGraphics, mouseX, mouseY);
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
