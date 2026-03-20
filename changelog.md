@@ -1,1 +1,1 @@
-- Arrow in Leggings Quiver can be selected now even player equipped empty Chestplate Quiver
+- Armor with a bound Quiver can be unbound by dropping it on the ground and smashing it with a falling Anvil
