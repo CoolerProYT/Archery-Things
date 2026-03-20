@@ -1,2 +1,1 @@
-- Added player renderer for accessories quiver slot
-- Fixed arrow in quiver rendered in wrong z axis for quiver without chestplate
+- Armor with a bound Quiver can be unbound by dropping it on the ground and smashing it with a falling Anvil
