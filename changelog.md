@@ -1,1 +1,1 @@
-- Armor with a bound Quiver can be unbound by dropping it on the ground and smashing it with a falling Anvil
+- Port to 26.1

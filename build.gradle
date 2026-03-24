@@ -126,7 +126,7 @@ idea {
 
 publishMods {
     file.set(jar.archiveFile)
-    type = BETA
+    type = STABLE
     modLoaders.add("neoforge")
     changelog = file("changelog.md").text
     displayName = mod_id + "-" + mod_version
@@ -134,7 +134,7 @@ publishMods {
     curseforge {
         projectId = "1418219"
         accessToken = findProperty("CF_TOKEN")
-        minecraftVersions.add("26.1-snapshot")
+        minecraftVersions.add(minecraft_version)
     }
 
     modrinth {
