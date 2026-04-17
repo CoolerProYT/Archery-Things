@@ -1,0 +1,9 @@
+{
+  "item.archerythings.quiver": "Quiver",
+  "creativetab.archerythings": "Archery Things",
+  "tooltip.archerythings.quiver_stored": "Quiver Stored:",
+  "tooltip.archerythings.with_quiver": " with Quiver",
+  "message.archerythings.no_quiver_slot": "No arrow in selected quiver slot.",
+  "key.archerythings.open_quiver_menu": "Open Quiver Menu",
+  "key.category.archerythings.category": "Archery Things"
+}
