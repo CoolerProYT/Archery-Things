@@ -10,6 +10,10 @@
   "server": [],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "AvatarRendererMixin",
+    "LivingEntityRenderStateMixin"
+  ]
 }
 

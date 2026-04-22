@@ -22,7 +22,7 @@ public record ServerBoundQuiverMenuPacket() implements CustomPacketPayload {
     public void handle(PayloadContext context){
         context.execute(() -> {
             if (context.player() instanceof ServerPlayer player){
-                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get())){
+                if (player.getItemBySlot(EquipmentSlot.CHEST).is(ModItems.QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get()) || Services.QUIVER.isQuiverEquipped(player)){
                     Services.MENU.openMenu(player, new SimpleMenuProvider(QuiverMenu::new, Component.translatable("item.archerythings.quiver")), null);
                 }
             }

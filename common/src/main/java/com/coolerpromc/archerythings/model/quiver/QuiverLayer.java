@@ -5,6 +5,7 @@ import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.component.data.QuiverData;
 import com.coolerpromc.archerythings.item.custom.ModQuiverItem;
 import com.coolerpromc.archerythings.model.ModModelLayers;
+import com.coolerpromc.archerythings.util.LivingEntityRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -28,19 +29,23 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
     private static final Identifier TEXTURE = Constants.id("textures/entity/quiver.png");
     private static final Identifier LEG_TEXTURE = Constants.id("textures/entity/quiver_leg.png");
 
-    private final QuiverModel model;
+    private final QuiverModel<S> model;
     private final QuiverLegModel legModel;
 
     public QuiverLayer(RenderLayerParent<S, M> renderer, EntityModelSet modelSet) {
         super(renderer);
-        this.model = new QuiverModel(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderTypes::entityCutout);
+        this.model = new QuiverModel<>(modelSet.bakeLayer(ModModelLayers.QUIVER), RenderTypes::entityCutout);
         this.legModel = new QuiverLegModel(modelSet.bakeLayer(ModModelLayers.QUIVER_LEG), RenderTypes::entityCutout);
     }
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, S renderState, float yRot, float partialTick) {
-        if (!renderState.chestEquipment.isEmpty() && (renderState.chestEquipment.getItem() instanceof ModQuiverItem || renderState.chestEquipment.has(ModDataComponents.STORED_QUIVER.get()))) {
+        ItemStack quiverStack = ((LivingEntityRenderStateAccessor) renderState).archerythings$getQuiverStack();
+        if (!renderState.chestEquipment.isEmpty() && (renderState.chestEquipment.getItem() instanceof ModQuiverItem || renderState.chestEquipment.has(ModDataComponents.STORED_QUIVER.get())) || quiverStack != null) {
             ItemStack quiver = renderState.chestEquipment;
+            if (quiverStack != null){
+                quiver = quiverStack;
+            }
             float z = 0.06875F;
             float z1 = -0.04875F;
             if (quiver.has(ModDataComponents.STORED_QUIVER.get())){

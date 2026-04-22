@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier;
 
 import java.util.function.Function;
 
-public class QuiverModel extends Model {
+public class QuiverModel<S> extends Model<S> {
     private final ModelPart root;
     private final ModelPart quiver;
 

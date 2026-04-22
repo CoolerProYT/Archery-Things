@@ -2,6 +2,7 @@ package com.coolerpromc.archerythings.screen.quiver;
 
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.item.ModItems;
+import com.coolerpromc.archerythings.platform.Services;
 import com.coolerpromc.archerythings.screen.ModMenuTypes;
 import com.coolerpromc.archerythings.screen.container.QuiverContainer;
 import net.minecraft.world.InteractionHand;
@@ -40,6 +41,9 @@ public class QuiverMenu extends AbstractContainerMenu {
         }
         else if(player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get())){
             quiver = player.getItemBySlot(EquipmentSlot.LEGS).get(ModDataComponents.STORED_QUIVER.get()).stack();
+        }
+        else if (Services.QUIVER.isQuiverEquipped(player)){
+            quiver = Services.QUIVER.getQuiver(player);
         }
         else {
             quiver = ItemStack.EMPTY;
@@ -102,7 +106,7 @@ public class QuiverMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get());
+        return !quiver.isEmpty() && player.getInventory().contains(quiver) || player.getItemInHand(InteractionHand.MAIN_HAND).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.CHEST).has(ModDataComponents.STORED_QUIVER.get()) || player.getItemBySlot(EquipmentSlot.LEGS).has(ModDataComponents.STORED_QUIVER.get()) || Services.QUIVER.isQuiverEquipped(player);
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
