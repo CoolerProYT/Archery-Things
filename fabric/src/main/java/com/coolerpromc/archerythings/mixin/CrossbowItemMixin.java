@@ -1,7 +1,7 @@
 package com.coolerpromc.archerythings.mixin;
 
 import com.coolerpromc.archerythings.util.ArrowHandler;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
