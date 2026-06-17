@@ -1,3 +1,1 @@
-## 26.1.2.1
-### NeoForge
-- Added curios slot for quiver
+- Port to 26.2
