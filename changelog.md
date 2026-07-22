@@ -1,3 +1,2 @@
-## 26.1.2.1
-### NeoForge
-- Added curios slot for quiver
+## 26.1.2.2
+- Added `pt_br` translation

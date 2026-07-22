@@ -1,0 +1,9 @@
+{
+  "item.archerythings.quiver": "Aljava",
+  "creativetab.archerythings": "Coisas de Arquearia",
+  "tooltip.archerythings.quiver_stored": "Aljava Guardada:",
+  "tooltip.archerythings.with_quiver": " com Aljava",
+  "message.archerythings.no_quiver_slot": "Sem flechas nesse slot da aljava.",
+  "key.archerythings.open_quiver_menu": "Abrir Menu da Aljava",
+  "key.category.archerythings.category": "Coisas de Arquearia"
+}
