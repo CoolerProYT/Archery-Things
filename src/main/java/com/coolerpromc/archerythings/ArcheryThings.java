@@ -146,9 +146,23 @@ public class ArcheryThings {
         if (left.get(DataComponents.EQUIPPABLE) != null && (left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS)) && right.getItem() == ModItems.QUIVER.get() && !left.has(ModDataComponents.STORED_QUIVER.get())){
             ItemStack output = event.getLeft().copy();
             output.set(ModDataComponents.STORED_QUIVER.get(), new StoredQuiver(right));
+            
+            int xpCost = 1;
+            if (event.getName() != null) {
+                if (event.getName().isEmpty()) {
+                    if (left.has(DataComponents.CUSTOM_NAME)) {
+                        output.remove(DataComponents.CUSTOM_NAME);
+                        xpCost += 1;
+                    }
+                } else if (!event.getName().equals(left.getHoverName().getString())) {
+                    output.set(DataComponents.CUSTOM_NAME, Component.literal(event.getName()));
+                    xpCost += 1;
+                }
+            }
+
             event.setOutput(output);
             event.setMaterialCost(1);
-            event.setXpCost(1);
+            event.setXpCost(xpCost);
         }
     }
 
