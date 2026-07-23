@@ -40,11 +40,11 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @Unique
     public void onAnvilUpdate(ItemStack left, ItemStack right, Container resultSlot, @Nullable String name, Player player) {
-        ItemStack result = AnvilHandler.onUpdate(left, right);
+        AnvilHandler.AnvilUpdateResult result = AnvilHandler.onUpdate(left, right, name);
 
-        if (!result.isEmpty()){
-            resultSlot.setItem(0, result);
-            this.cost.set(1);
+        if (!result.output().isEmpty()){
+            resultSlot.setItem(0, result.output());
+            this.cost.set(result.xpCost());
             this.repairItemCountCost = 1;
         }
     }

@@ -60,12 +60,12 @@ public class ArcheryThings {
     public void onAnvilUpdate(AnvilUpdateEvent event) {
         ItemStack left = event.getLeft();
         ItemStack right = event.getRight();
-        ItemStack result = AnvilHandler.onUpdate(left, right);
+        AnvilHandler.AnvilUpdateResult result = AnvilHandler.onUpdate(left, right, event.getName());
 
-        if (!result.isEmpty()){
-            event.setOutput(result);
+        if (!result.output().isEmpty()){
+            event.setOutput(result.output());
             event.setMaterialCost(1);
-            event.setXpCost(1);
+            event.setXpCost(result.xpCost());
         }
     }
 }

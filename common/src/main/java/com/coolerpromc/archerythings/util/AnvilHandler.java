@@ -5,6 +5,7 @@ import com.coolerpromc.archerythings.component.data.StoredQuiver;
 import com.coolerpromc.archerythings.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -23,14 +24,32 @@ public class AnvilHandler {
         }
     }
 
-    public static ItemStack onUpdate(ItemStack left, ItemStack right){
+    public static AnvilUpdateResult onUpdate(ItemStack left, ItemStack right, String name){
         if (!left.isEmpty()) {
             if (left.get(DataComponents.EQUIPPABLE) != null && (left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.CHEST) || left.get(DataComponents.EQUIPPABLE).slot().equals(EquipmentSlot.LEGS)) && right.getItem() == ModItems.QUIVER.get() && !left.has(ModDataComponents.STORED_QUIVER.get())){
                 ItemStack output = left.copy();
                 output.set(ModDataComponents.STORED_QUIVER.get(), new StoredQuiver(right));
-                return output;
+
+                int xpCost = 1;
+                if (name != null) {
+                    if (name.isEmpty()) {
+                        if (left.has(DataComponents.CUSTOM_NAME)) {
+                            output.remove(DataComponents.CUSTOM_NAME);
+                            xpCost += 1;
+                        }
+                    } else if (!name.equals(left.getHoverName().getString())) {
+                        output.set(DataComponents.CUSTOM_NAME, Component.literal(name));
+                        xpCost += 1;
+                    }
+                }
+
+                return new AnvilUpdateResult(output, xpCost);
             }
         }
-        return ItemStack.EMPTY;
+        return AnvilUpdateResult.EMPTY;
+    }
+
+    public record AnvilUpdateResult(ItemStack output, int xpCost){
+        public static final AnvilUpdateResult EMPTY = new AnvilUpdateResult(ItemStack.EMPTY, 0);
     }
 }

@@ -1,2 +1,2 @@
-## 26.1.2.2
-- Added `pt_br` translation
+## 26.1.2.3
+- Fixed anvil ignoring rename when binding armor with quiver
