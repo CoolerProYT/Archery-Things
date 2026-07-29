@@ -12,6 +12,7 @@ public class ModDataComponents {
     public static final RegistryHandler<DataComponentType<QuiverData>> QUIVER_DATA = Services.REGISTRY.registerDataComponent("quiver_data", (p_341846_) -> p_341846_.persistent(QuiverData.CODEC).networkSynchronized(QuiverData.STREAM_CODEC));
     public static final RegistryHandler<DataComponentType<Integer>> SELECTED = Services.REGISTRY.registerDataComponent("selected", builder -> builder.persistent(Codec.INT).networkSynchronized(ByteBufCodecs.INT).cacheEncoding());
     public static final RegistryHandler<DataComponentType<StoredQuiver>> STORED_QUIVER = Services.REGISTRY.registerDataComponent("stored_quiver", builder -> builder.persistent(StoredQuiver.CODEC).networkSynchronized(StoredQuiver.STREAM_CODEC));
+    public static final RegistryHandler<DataComponentType<Boolean>> COLLECT_TO_QUIVER = Services.REGISTRY.registerDataComponent("collect_to_quiver", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL).cacheEncoding());
 
     public static void load(){
     }
