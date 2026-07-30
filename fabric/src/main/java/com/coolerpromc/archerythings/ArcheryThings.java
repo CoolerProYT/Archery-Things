@@ -21,6 +21,9 @@ public class ArcheryThings implements ModInitializer {
         PayloadTypeRegistry.serverboundPlay().register(ServerBoundSelectQuiverSlotPacket.TYPE, ServerBoundSelectQuiverSlotPacket.STREAM_CODEC);
         ServerPlayNetworking.registerGlobalReceiver(ServerBoundSelectQuiverSlotPacket.TYPE, (packet, context) -> packet.handle(new FabricPayloadContext(context)));
 
+        PayloadTypeRegistry.serverboundPlay().register(com.coolerpromc.archerythings.network.packet.ServerBoundToggleQuiverPickupPacket.TYPE, com.coolerpromc.archerythings.network.packet.ServerBoundToggleQuiverPickupPacket.STREAM_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(com.coolerpromc.archerythings.network.packet.ServerBoundToggleQuiverPickupPacket.TYPE, (packet, context) -> packet.handle(new FabricPayloadContext(context)));
+
         UseItemCallback.EVENT.register((player, _, interactionHand) -> UseItemHandler.onUseItem(player.getItemInHand(interactionHand), player, interactionHand));
     }
 }

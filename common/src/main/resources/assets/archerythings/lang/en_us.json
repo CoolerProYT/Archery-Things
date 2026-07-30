@@ -5,5 +5,9 @@
   "tooltip.archerythings.with_quiver": " with Quiver",
   "message.archerythings.no_quiver_slot": "No arrow in selected quiver slot.",
   "key.archerythings.open_quiver_menu": "Open Quiver Menu",
-  "key.category.archerythings.category": "Archery Things"
+  "key.category.archerythings.category": "Archery Things",
+  "gui.archerythings.pickup.tooltip.quiver": "Arrows collected go to the quiver",
+  "gui.archerythings.pickup.tooltip.inventory": "Arrows collected go to the inventory",
+  "gui.archerythings.pickup.button.quiver": "Q",
+  "gui.archerythings.pickup.button.inventory": "I"
 }
