@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import java.util.function.Function;
 
 public class ModItems {
-    public static final RegistryHandler<ModQuiverItem> QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.stacksTo(1).component(ModDataComponents.QUIVER_DATA.get(), QuiverData.EMPTY).component(ModDataComponents.SELECTED.get(), 0)));
+    public static final RegistryHandler<ModQuiverItem> QUIVER = registerItem("quiver", properties -> new ModQuiverItem(properties.stacksTo(1).component(ModDataComponents.QUIVER_DATA.get(), QuiverData.EMPTY).component(ModDataComponents.SELECTED.get(), 0).component(ModDataComponents.COLLECT_TO_QUIVER.get(), true)));
 
     private static <T extends Item> RegistryHandler<T> registerItem(String name, Function<Item.Properties, T> item){
         return Services.REGISTRY.registerItem(name, item);

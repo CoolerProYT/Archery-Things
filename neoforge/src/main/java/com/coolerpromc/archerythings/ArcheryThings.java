@@ -35,6 +35,7 @@ public class ArcheryThings {
 
         registrar.playToServer(ServerBoundQuiverMenuPacket.TYPE, ServerBoundQuiverMenuPacket.STREAM_CODEC, (payload, context) -> payload.handle(new NeoForgePayloadContext(context)));
         registrar.playToServer(ServerBoundSelectQuiverSlotPacket.TYPE, ServerBoundSelectQuiverSlotPacket.STREAM_CODEC, (payload, context) -> payload.handle(new NeoForgePayloadContext(context)));
+        registrar.playToServer(com.coolerpromc.archerythings.network.packet.ServerBoundToggleQuiverPickupPacket.TYPE, com.coolerpromc.archerythings.network.packet.ServerBoundToggleQuiverPickupPacket.STREAM_CODEC, (payload, context) -> payload.handle(new NeoForgePayloadContext(context)));
     }
 
     @SubscribeEvent
