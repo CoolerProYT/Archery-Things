@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
@@ -60,7 +61,7 @@ public class QuiverMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(container, i, 8 + i * 18, 17){
                 @Override
                 public boolean mayPlace(ItemStack stack) {
-                    return stack.getItem() instanceof ArrowItem;
+                    return stack.getItem() instanceof ArrowItem || stack.getItem() instanceof FireworkRocketItem;
                 }
             });
         }
