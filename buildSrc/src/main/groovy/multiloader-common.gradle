@@ -33,6 +33,10 @@ repositories {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        name = "Nucleoid"
+        url = 'https://maven.nucleoid.xyz/releases'
+    }
 }
 
 sourcesJar {
@@ -75,7 +79,8 @@ processResources {
             'neoforge_version'             : neoforge_version,
             'neoforge_loader_version_range': neoforge_loader_version_range,
             'credits'                      : credits,
-            'java_version'                 : java_version
+            'java_version'                 : java_version,
+            'trinkets_version'             : trinkets_version
     ]
 
     var jsonExpandProps = expandProps.collectEntries {

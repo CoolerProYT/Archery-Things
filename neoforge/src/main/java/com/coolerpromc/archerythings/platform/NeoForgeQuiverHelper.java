@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 public class NeoForgeQuiverHelper implements IQuiverHelper {
     @Override
     public boolean isQuiverEquipped(Player player) {
-        return Services.PLATFORM.isModLoaded("curios") && CuriosHelper.isQuiverEquipped(player);
+        return (Services.PLATFORM.isModLoaded("curios") && CuriosHelper.isQuiverEquipped(player)) || isQuiverEquippedCommon(player);
     }
 
     @Override
@@ -16,6 +16,7 @@ public class NeoForgeQuiverHelper implements IQuiverHelper {
         if (!isQuiverEquipped(player)){
             return ItemStack.EMPTY;
         }
+        if (isQuiverEquippedCommon(player)) return getQuiverCommon(player);
         return CuriosHelper.getQuiver(player);
     }
 }
