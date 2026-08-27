@@ -1,2 +1,2 @@
-## 26.2.0.4
-- Added support for `Firework` item to put inside quiver
+## 26.2.0.5
+- Added new quiver slot to `Trinkets Updated`

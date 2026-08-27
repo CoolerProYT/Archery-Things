@@ -8,11 +8,12 @@ import net.minecraft.world.item.ItemStack;
 public class FabricQuiverHelper implements IQuiverHelper {
     @Override
     public boolean isQuiverEquipped(Player player) {
-        return Services.PLATFORM.isModLoaded("accessories");
+        return Services.PLATFORM.isModLoaded("accessories") || isQuiverEquippedCommon(player);
     }
 
     @Override
     public ItemStack getQuiver(Player player) {
+        if (isQuiverEquippedCommon(player)) return getQuiverCommon(player);
         return ItemStack.EMPTY;
     }
 }
