@@ -31,7 +31,7 @@ public abstract class CrossbowItemMixin extends ProjectileWeaponItem {
             if (shooter instanceof Player player) ArrowHandler.onArrowLoose(player, weapon, shooter.level(), true);
             ChargedProjectiles chargedprojectiles = weapon.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY);
             if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
-                this.shoot(serverlevel, shooter, hand, weapon, chargedprojectiles.itemCopies(), velocity, inaccuracy, shooter instanceof Player, target);
+                this.shoot(serverlevel, shooter, hand, weapon, chargedprojectiles.itemCopies().toList(), velocity, inaccuracy, shooter instanceof Player, target);
                 if (shooter instanceof ServerPlayer serverplayer) {
                     CriteriaTriggers.SHOT_CROSSBOW.trigger(serverplayer, weapon);
                     serverplayer.awardStat(Stats.ITEM_USED.get(weapon.getItem()));

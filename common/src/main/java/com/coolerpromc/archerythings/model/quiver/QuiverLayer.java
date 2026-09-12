@@ -67,24 +67,24 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
 
             poseStack.pushPose();
             if (renderState.isCrouching){
-                poseStack.mulPose(Axis.XP.rotationDegrees(30));
+                poseStack.rotateDegrees(Axis.XP, 30);
                 poseStack.translate(0.0F, -0.053125F, z1);
             }
             else{
                 poseStack.translate(0.0F, -0.053125F, z);
             }
-            nodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutout(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            nodeCollector.submitModel(this.model, renderState, poseStack, RenderTypes.entityCutout(TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor);
             poseStack.popPose();
 
             poseStack.pushPose();
             if (renderState.isCrouching){
-                poseStack.mulPose(Axis.XP.rotationDegrees(30));
+                poseStack.rotateDegrees(Axis.XP, 30);
                 poseStack.translate(-0.3f, 0f, 0.2f);
             }
             else{
                 poseStack.translate(-0.3f, 0f, 0.325f);
             }
-            poseStack.mulPose(Axis.ZP.rotationDegrees(85));
+            poseStack.rotateDegrees(Axis.ZP, 85);
             poseStack.scale(0.5f, 0.5f, 0.5f);
             state.submit(poseStack, nodeCollector, packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();
@@ -113,25 +113,25 @@ public class QuiverLayer<S extends HumanoidRenderState, M extends HumanoidModel<
 
             poseStack.pushPose();
             if (renderState.isCrouching){
-                poseStack.mulPose(Axis.XP.rotationDegrees(30));
+                poseStack.rotateDegrees(Axis.XP, 30);
                 poseStack.translate(0.0F, -0.053125F, -0.01);
             }
             else{
                 poseStack.translate(0.0F, -0.053125F, z);
             }
-            nodeCollector.submitModel(this.legModel, renderState, poseStack, RenderTypes.entityCutout(LEG_TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor, null);
+            nodeCollector.submitModel(this.legModel, renderState, poseStack, RenderTypes.entityCutout(LEG_TEXTURE), packedLight, OverlayTexture.NO_OVERLAY, color, null, renderState.outlineColor);
             poseStack.popPose();
 
             poseStack.pushPose();
             if (renderState.isCrouching){
-                poseStack.mulPose(Axis.XP.rotationDegrees(30));
+                poseStack.rotateDegrees(Axis.XP, 30);
                 poseStack.translate(-0.4f, 0.85f, 0.05);
             }
             else{
                 poseStack.translate(-0.4f, 0.75f, 0.05);
             }
-            poseStack.mulPose(Axis.ZP.rotationDegrees(90));
-            poseStack.mulPose(Axis.XN.rotationDegrees(90));
+            poseStack.rotateDegrees(Axis.ZP, 90);
+            poseStack.rotateDegrees(Axis.XN, 90);
             poseStack.scale(0.5f, 0.5f, 0.5f);
             state.submit(poseStack, nodeCollector, packedLight, OverlayTexture.NO_OVERLAY, renderState.outlineColor);
             poseStack.popPose();

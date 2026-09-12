@@ -13,6 +13,14 @@ repositories {
             includeModule("net.neoforged", "testframework")
         }
     }
+    maven {
+        name = "coolerpromcMavenPrivate"
+        url = "https://maven.coolerpromc.com/private"
+        credentials {
+            username = findProperty("maven_username")
+            password = findProperty("maven_password")
+        }
+    }
 }
 
 neoForge {
@@ -56,10 +64,20 @@ dependencies {
 //    runtimeOnly "top.theillusivec4.curios:curios-neoforge:15.0.0-beta.2+26.1.2"
 
     compileOnly "eu.pb4:trinkets:${trinkets_version}"
-    runtimeOnly "eu.pb4:trinkets:${trinkets_version}"
+//    runtimeOnly "eu.pb4:trinkets:${trinkets_version}"
 }
 
 sourceSets.main.resources { srcDir rootProject.project(':common').file('src/generated/resources/').getAbsolutePath() }
+
+// The curios-neoforge "api" artifact ships its interfaces as bundled .java sources rather than
+// compiled classes, so javadoc recompiles them from scratch; CuriosApi.java (which we depend on)
+// transitively pulls in ICurio.java, which still references the pre-26.3 class
+// net.minecraft.world.entity.monster.EnderMan (renamed to Enderman in 26.3-rc-2). There is no
+// public curios-neoforge build for 26.3 yet, so skip javadoc here until one ships; the mod itself
+// still compiles and packages fine.
+tasks.named('javadoc', Javadoc).configure {
+    enabled = false
+}
 
 // Implement mcgradleconventions loader attribute
 def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)

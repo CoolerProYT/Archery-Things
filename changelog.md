@@ -1,2 +1,2 @@
-## 26.2.0.5
-- Added new quiver slot to `Trinkets Updated`
+## 26.3.0.0
+- Update to Minecraft 26.3-rc-2
