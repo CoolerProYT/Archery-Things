@@ -4,6 +4,7 @@ import com.coolerpromc.archerythings.Constants;
 import com.coolerpromc.archerythings.component.ModDataComponents;
 import com.coolerpromc.archerythings.network.packet.ServerBoundSelectQuiverSlotPacket;
 import com.coolerpromc.archerythings.platform.Services;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.KeyEvent;
@@ -113,12 +114,12 @@ public class QuiverScreen extends AbstractContainerScreen<QuiverMenu> {
 
     @Override
     public boolean keyPressed(KeyEvent event) {
-        if (event.key() >= 49 && event.key() <= 57) {
-            int key = event.key() - 49;
+        if (event.key() >= InputConstants.KEY_1 && event.key() <= InputConstants.KEY_9) {
+            int key = event.key() - InputConstants.KEY_1;
             this.menu.quiver.set(ModDataComponents.SELECTED.get(), key);
             this.menu.broadcastChanges();
             Services.NETWORK.sendToServer(new ServerBoundSelectQuiverSlotPacket(key,
-                    this.menu.hand == null ? Optional.empty() : Optional.of(this.menu.hand)));
+                this.menu.hand == null ? Optional.empty() : Optional.of(this.menu.hand)));
             return true;
         }
         return super.keyPressed(event);
